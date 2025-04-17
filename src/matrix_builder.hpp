@@ -4,4 +4,4 @@
 
 using MatrixEntry = std::tuple<int, int, double>;
 
-std::vector<MatrixEntry> buildSparseMatrix(int rank, int size, int N);
+std::vector<MatrixEntry> build_sparse_matrix(int rank, int size, int N);

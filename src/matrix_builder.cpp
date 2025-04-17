@@ -3,13 +3,13 @@
 /**
  * Builds the sparse adjacency matrix.
  * Only the non-zero values are stored for memory optimization.
- * MatrixEntry is a tuple (int, int, double) that denotes source_node, target_node and the value.
+ * Matrix is held in COO (Coordinate List) format, a set of triplets denoting the row_idx, col_idx and the value.
  * @param rank
  * @param size
  * @param N
  * @return
  */
-std::vector<MatrixEntry> buildSparseMatrix(const int rank, const int size, const int N) {
+std::vector<MatrixEntry> build_sparse_matrix(const int rank, const int size, const int N) {
     const int rows_per_rank = N / size;
     const int remainder = N % size;
 
