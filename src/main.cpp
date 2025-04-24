@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <iostream>
 #include <mpi.h>
+#include <numeric>
 
 #include "matrix_builder.hpp"
 #include "pagerank_solver.hpp"
@@ -15,18 +17,29 @@ int main(int argc, char** argv) {
   const double p = 0.85;
 
   // Build the G matrix
-  std::vector<MatrixEntry> G = build_sparse_matrix(rank, size, N);
-  for (const auto& [row, col, val] : G) {
-    std::cout << "Rank " << rank << " G(" << row << ", " << col << ") = " << val << "\n";
-  }
+  const std::vector<MatrixEntry> G = build_sparse_matrix(rank, size, N);
 
   // Calculate solution vector u
   std::vector<double> u = run_power_method(G, N, rank, size, p);
-  for (int i = 0; i < u.size(); ++i) {
-    std::cout << "u[" << i << "]" << " = " << u.at(i) << "\n";
-  }
 
   // Sort and rank on process 0
+  if (rank == 0) {
+    std::vector<std::pair<int, double>> ranked;
+    for (int i = 0; i < N; ++i)
+      ranked.emplace_back(i, u[i]);
+
+    std::sort(ranked.begin(), ranked.end(),
+              [](auto& a, auto& b) { return b.second > a.second; });
+
+    std::cout << "\nTop 10 pages:\n";
+    for (int i = 0; i < 10; ++i) {
+      std::cout << "Page " << ranked[i].first
+                << " → Rank: " << ranked[i].second << "\n";
+    }
+
+    const double sum = std::accumulate(u.begin(), u.end(), 0.0);
+    std::cout << "\nSum of rank vector: " << sum << " (should ≈ 1)\n";
+  }
 
   MPI_Finalize();
   return 0;
