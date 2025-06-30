@@ -1,6 +1,4 @@
-#include <iostream>
 #include <mpi.h>
-#include <numeric>
 
 #include "include/Graph.hpp"
 #include "include/Measurement.hpp"

@@ -1,9 +1,9 @@
-#include "include/Measurement.hpp"
-
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <mpi.h>
+
+#include "include/Measurement.hpp"
 
 Measurement::Measurement(const double t1_baseline) : t1(t1_baseline) {}
 
