@@ -5,8 +5,11 @@ find_package(MPI REQUIRED)
 
 add_executable(${PROJECT_NAME}
         src/main.cpp
-        src/matrix_builder.cpp
-        src/pagerank_solver.cpp
+        src/COOMatrix.cpp
+        src/Graph.cpp
+        src/PageRankSolver.cpp
+        src/PageRankSolverMPI.cpp
+        src/Measurement.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
