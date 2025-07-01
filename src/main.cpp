@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     const Graph g = Graph::build_synthetic_graph(N);
     const COOMatrix M = g.build_transition_matrix(0.85);
 
-    const double t1_baseline = 0.0;
+    constexpr double t1_baseline = 0.0;
     Measurement meas(t1_baseline);
 
     meas.start();
